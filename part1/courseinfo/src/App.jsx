@@ -21,10 +21,10 @@ function App() {
     <div>
       <Header course={course} />
       <Content 
-        course={course.parts}
+        course={course}
       />
   
-      <Total course={course.parts} />
+      <Total course={course} />
     </div>
   );
 }

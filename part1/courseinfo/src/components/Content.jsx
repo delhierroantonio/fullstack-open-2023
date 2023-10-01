@@ -1,5 +1,5 @@
 const Part = (props) => {
-  console.log(props);
+  // console.log(props);
   return (
     <>
       <span>{props.name} - </span>
@@ -10,10 +10,10 @@ const Part = (props) => {
 }
 
 const Content = (props) => {
-  console.log(props.course);
+  // console.log(props.course);
   return (
     <>
-    {props.course.map(course => <Part key={course.name} name={course.name} exercises={course.exercises} />)}
+    {props.course.parts.map(course => <Part key={course.name} name={course.name} exercises={course.exercises} />)}
     </>
   )
 }
