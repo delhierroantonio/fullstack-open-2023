@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios'
+
 // components
 import Filter from "./components/Filter";
 import AddNewPerson from "./components/AddNewPerson";
@@ -6,20 +8,32 @@ import Contacts from "./components/Contacts";
 // styles
 import "./App.css";
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+const contactsUrl = 'http://localhost:3001/persons';
 
-  const [newName, setNewName] = useState('');
-  const [newPhone, setNewPhone] = useState('');
-  const [filterName, setFilterName] = useState('')
+const App = () => {
+  // const [persons, setPersons] = useState([
+    //   { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    //   { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    //   { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    //   { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
+    // ])
+    const [persons, setPersons] = useState([]);
+    
+    const [newName, setNewName] = useState('');
+    const [newPhone, setNewPhone] = useState('');
+    const [filterName, setFilterName] = useState('')
+    
+    useEffect(() => {
+      console.log('Effect');
+      axios.get(contactsUrl)
+      .then(response => {
+        setPersons(response.data);
+      })
+    }, []);
 
   return (
     <div>
+      <h1>{ persons.length ? persons[0].name : 'Not rendered yet'}</h1>
       <h2>Phonebook</h2>
       <AddNewPerson
         persons={persons}
