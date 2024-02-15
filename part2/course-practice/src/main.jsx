@@ -21,7 +21,7 @@ const notes = [
 ]
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <App notes={notes} />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App notes={notes} />
+  // </React.StrictMode>
 )
