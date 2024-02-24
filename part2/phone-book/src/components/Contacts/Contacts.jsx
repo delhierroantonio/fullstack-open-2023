@@ -1,4 +1,6 @@
-const Contacts = ({ persons, nameToFilter }) => {
+// import contactService from '../../services/contacts.js'
+
+const Contacts = ({ persons, setPersons, nameToFilter, handleRemove }) => {
   return (
     <>
       {/* {persons.map(person => (
@@ -15,6 +17,7 @@ const Contacts = ({ persons, nameToFilter }) => {
         .map(item => (
           <div key={item.name}>
             - <span>{item.name}</span> - <span>{item.phone}</span>
+            <button onClick={() => handleRemove(item.id)}>Delete</button>
           </div>
         ))
     }
