@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import './App.css'
+import './index.css'
 import { AddNewContact, Filter, Contacts } from './components/index.js'
+import Notification from './components/Notification/Notification.jsx'
 import axios from 'axios'
 import contactService from './services/contacts.js'
 
@@ -11,6 +12,8 @@ function App () {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [nameToFilter, setNameToFilter] = useState('')
+
+  const [errorMsg, setErrorMsg] = useState(null)
 
   // fetch all contacts
   useEffect(() => {
@@ -39,9 +42,22 @@ function App () {
             setPersons(persons.map(person => person.id !== duplicatedPerson.id ? person : returnedPerson))
             setNewName('')
             setNewPhone('')
+            setErrorMsg({
+              text: `Updated ${returnedPerson.name}`,
+              type: 'notification'
+            })
+            setTimeout(() => {
+              setErrorMsg(null)
+            }, 1400)
           })
           .catch(error => {
-            console.log(error)
+            setErrorMsg({
+              text: `Failed, the contact ${duplicatedPerson.name} has already been removed, details: ${error}`,
+              type: 'error'
+            })
+            setTimeout(() => {
+              setErrorMsg(null)
+            }, 1900)
           })
       }
     } else {
@@ -51,54 +67,19 @@ function App () {
           setPersons(persons.concat(returnedContact))
           setNewName('')
           setNewPhone('')
-          console.log(`The contact has been created: ${returnedContact.id}`)
+          setErrorMsg({
+            text: `Created ${returnedContact.name}`,
+            type: 'notification'
+          })
+          setTimeout(() => {
+            setErrorMsg(null)
+          }, 1400)
+          // console.log(`The contact has been created: ${returnedContact.id}`)
         })
         .catch(error => {
           console.log(error)
         })
     }
-    // if (person.length < 1) {
-    //   // setPersons(persons.concat(contactObject))
-    //   contactService
-    //     .createNote(contactObject)
-    //     .then(returnedContact => {
-    //       setPersons(persons.concat(returnedContact))
-    //       setNewName('')
-    //       setNewPhone('')
-    //       console.log(`The contact has been created: ${returnedContact.id}`)
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // } else {
-    //   alert(`The contact "${newName}" has already been added to the Phonebook!`)
-    //   setNewName('')
-    //   setNewPhone('')
-    // }
-
-    // const duplicatedContact = persons.filter(person => person.name === newName)
-    // if (duplicatedContact) {
-    //   if (window.confirm(`The contact: ${newName} has already been added to the phonebook, do you want to replace it?`) === true) {
-    //     contactService
-    //       .updateContact(duplicatedContact.id, contactObject)
-    //       .then(returnedContact => {
-    //         setPersons(persons.map(person => person.id !== duplicatedContact.id ? person : returnedContact))
-    //         console.log(returnedContact)
-    //       })
-    //   } else {
-    //     contactService
-    //       .createNote(contactObject)
-    //       .then(res => {
-    //         setPersons(persons.concat(res))
-    //         setNewName('')
-    //         setNewPhone('')
-    //         console.log(`The contact has been created: ${res.id}`)
-    //       })
-    //       .catch(error => {
-    //         console.log(error)
-    //       })
-    //   }
-    // }
   }
 
   const handleRemove = (id) => {
@@ -107,7 +88,14 @@ function App () {
         .deleteNote(id)
         .then(returnedContact => {
           setPersons(persons.filter(person => person.id !== returnedContact.id))
-          console.log(returnedContact.id)
+          setErrorMsg({
+            text: `Removed ${returnedContact.name}`,
+            type: 'error'
+          })
+          setTimeout(() => {
+            setErrorMsg(null)
+          }, 1400)
+          // console.log(returnedContact.id)
         })
         .catch(error => {
           console.log(error)
@@ -118,6 +106,7 @@ function App () {
   return (
     <>
       <h1>Phonebook</h1>
+      <Notification message={errorMsg} />
       <Filter setNameToFilter={setNameToFilter} />
       <AddNewContact
         persons={persons}

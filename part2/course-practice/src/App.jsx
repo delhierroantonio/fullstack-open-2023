@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Note from './components/Note/Note'
+import Notification from './components/Notification/Notification'
 // notes service module
 import noteService from './services/notes.js'
 import './App.css'
@@ -8,6 +9,7 @@ function App () {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMsg, setErrorMsg] = useState('')
 
   useEffect(() => {
     noteService
@@ -49,7 +51,12 @@ function App () {
         setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
       .catch(error => {
-        alert(`The note ${note.content} was already deleted from server: ${error}`)
+        setErrorMsg(
+          `Note '${note.content}' was already removed from server, details: ${error}`
+        )
+        setTimeout(() => {
+          setErrorMsg(null)
+        }, 500)
         setNotes(notes.filter(n => n.id !== id))
       })
   }
@@ -58,9 +65,24 @@ function App () {
     ? notes
     : notes.filter(note => note.important)
 
+  const Footer = () => {
+    const footerStyle = {
+      color: 'green',
+      fontStyle: 'italic',
+      fontSize: 16
+    }
+    return (
+      <div style={footerStyle}>
+        <br />
+        <em>Note app, Department of Computer Science, University of Helsinki 2024</em>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMsg} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? 'Important' : 'All'}
@@ -84,6 +106,7 @@ function App () {
           <button type='submit'>Add</button>
         </fieldset>
       </form>
+      <Footer />
     </div>
   )
 }
