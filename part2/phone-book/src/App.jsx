@@ -32,7 +32,6 @@ function App () {
 
   const handleAddContact = (e) => {
     e.preventDefault()
-    // const person = persons.filter(person => person.name.toLocaleLowerCase() === newName.toLocaleLowerCase())
     const duplicatedPerson = persons.find(person => person.name === newName)
     if (duplicatedPerson) {
       if (window.confirm(`The contact: "${duplicatedPerson.name}" has been already added, do you want to update the number?`) === true) {
@@ -74,7 +73,6 @@ function App () {
           setTimeout(() => {
             setErrorMsg(null)
           }, 1400)
-          // console.log(`The contact has been created: ${returnedContact.id}`)
         })
         .catch(error => {
           console.log(error)
@@ -95,7 +93,6 @@ function App () {
           setTimeout(() => {
             setErrorMsg(null)
           }, 1400)
-          // console.log(returnedContact.id)
         })
         .catch(error => {
           console.log(error)

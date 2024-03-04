@@ -1,33 +1,5 @@
 // import contactService from '../../services/contacts.js'
 const AddNewContact = ({ persons, setPersons, newName, setNewName, newPhone, setNewPhone, handleAddContact }) => {
-  // const contactObject = {
-  //   name: newName,
-  //   phone: newPhone
-  // }
-
-  // const handleAddContact = (e) => {
-  //   e.preventDefault()
-
-  //   const person = persons.filter(person => person.name.toLocaleLowerCase() === newName.toLocaleLowerCase())
-  //   if (person.length < 1) {
-  //     // setPersons(persons.concat(contactObject))
-  //     contactService
-  //       .createNote(contactObject)
-  //       .then(res => {
-  //         setPersons(persons.concat(res))
-  //         setNewName('')
-  //         setNewPhone('')
-  //         console.log(`The contact has been created: ${res.id}`)
-  //       })
-  //       .catch(error => {
-  //         console.log(error)
-  //       })
-  //   } else {
-  //     alert(`The contact "${newName}" has already been added to the Phonebook!`)
-  //     setNewName('')
-  //     setNewPhone('')
-  //   }
-  // }
   return (
     <>
       <h2>Add a new contact to the phonebook</h2>

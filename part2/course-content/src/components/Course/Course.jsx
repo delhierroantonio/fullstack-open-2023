@@ -13,11 +13,6 @@ const Course = ({ courses }) => {
           </div>
         )
       })}
-      {/* <Header course={course} />
-      <Content
-        course={course}
-      />
-      <Total course={course} /> */}
     </>
   )
 }
