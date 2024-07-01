@@ -6,7 +6,7 @@ import axios from 'axios'
 import contactService from './services/contacts.js'
 
 function App () {
-  const baseUrl = 'http://localhost:3001/persons'
+  const baseUrl = 'http://localhost:3001/api/persons'
   const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
@@ -20,8 +20,8 @@ function App () {
     axios
       .get(baseUrl)
       .then(res => {
-        const notes = res.data
-        setPersons(notes)
+        const persons = res.data
+        setPersons(persons)
       })
   }, [])
 
@@ -64,6 +64,7 @@ function App () {
         .createNote(contactObject)
         .then(returnedContact => {
           setPersons(persons.concat(returnedContact))
+          console.log('returned contact from createNote Fn: ', returnedContact)
           setNewName('')
           setNewPhone('')
           setErrorMsg({
@@ -85,9 +86,10 @@ function App () {
       contactService
         .deleteNote(id)
         .then(returnedContact => {
-          setPersons(persons.filter(person => person.id !== returnedContact.id))
+          console.log('Return contact from frontend: ', returnedContact)
+          setPersons(persons.filter(person => person.id !== returnedContact))
           setErrorMsg({
-            text: `Removed ${returnedContact.name}`,
+            text: `Removed ${returnedContact}`,
             type: 'error'
           })
           setTimeout(() => {

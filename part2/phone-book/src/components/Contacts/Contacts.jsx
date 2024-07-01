@@ -9,8 +9,9 @@ const Contacts = ({ persons, setPersons, nameToFilter, handleRemove }) => {
       })
         .map(item => (
           <div key={item.name}>
-            - <span>{item.name}</span> - <span>{item.phone}</span>
-            <button onClick={() => handleRemove(item.id)}>Delete</button>
+            {/* chenged item.phone to item.number below */}
+            - <span>{item.name}</span> - <span>{item.number}</span>
+            <button style={{ cursor: 'pointer', margin: '10px' }} onClick={() => handleRemove(item.id)}>Delete</button>
           </div>
         ))
     }
